@@ -130,14 +130,15 @@
 /* default 'retr'  script */
 #define FISH_GET_DEF_CONTENT ""                                                 \
 "export LC_TIME=C\n"                                                            \
-"#RETR $FISH_FILENAME\n"                                                        \
+"#RETR $FILENAME $OFFSET $SIZE\n"                                               \
 "if dd if=\"/${FISH_FILENAME}\" of=/dev/null bs=1 count=1 2>/dev/null ; then\n" \
 "    ls -ln \"/${FISH_FILENAME}\" 2>/dev/null | (\n"                            \
 "       read p l u g s r\n"                                                     \
 "       echo $s\n"                                                              \
 "    )\n"                                                                       \
 "    echo \"### 100\"\n"                                                        \
-"    cat \"/${FISH_FILENAME}\"\n"                                               \
+"    dd if=\"/${FISH_FILENAME}\" ibs=${FISH_START_OFFSET} skip=1"               \
+"       obs=${FISH_CHUNK_SIZE} count=1\n"                                       \
 "    echo \"### 200\"\n"                                                        \
 "else\n"                                                                        \
 "    echo \"### 500\"\n"                                                        \
