@@ -1546,6 +1546,13 @@ midnight_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void
             /* Else: the panel will handle it. */
         }
 
+        if (parm == '/' && input_is_empty (cmdline))
+        {
+            send_message (current_panel, midnight_dlg, MSG_ACTION, CK_Search,
+                                 NULL);
+            return MSG_NOT_HANDLED;     /* MSG_HANDLED stops search in case MSG_HOTKEY_HANDLED */
+        }
+
         if ((!mc_global.tty.alternate_plus_minus
              || !(mc_global.tty.console_flag != '\0' || mc_global.tty.xterm_flag)) && !quote
             && !current_panel->searching)
